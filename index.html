@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic SEO -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Schedule Optimizer | Best Time to Sleep & Wake Up</title>
+  <meta name="description" content="Free Sleep Schedule Optimizer - Find the best time to sleep and wake up for a healthy lifestyle. Works on all devices, simple & accurate.">
+  <meta name="keywords" content="sleep schedule optimizer, sleep calculator, best time to sleep, sleep cycle calculator, wake up time, healthy sleep">
+  <meta name="author" content="Your Name">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sleep Schedule Optimizer | Best Time to Sleep & Wake Up">
+  <meta property="og:description" content="Free tool to calculate your perfect sleep schedule based on natural sleep cycles.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://yourdomain.com/preview.jpg">
+  <meta property="og:url" content="https://yourdomain.com">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0d1b2a;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    h1 { 
+      color: #f4d35e; 
+      font-size: 1.8rem;
+      margin: 20px 0;
+    }
+    .container {
+      max-width: 420px;
+      margin: auto;
+      background: #1b263b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    }
+    label {
+      margin-top: 10px;
+      display: block;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    input, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+    input {
+      background: #fff;
+      color: #000;
+    }
+    button {
+      background: #f4d35e;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background: #f6c90e; }
+    .result {
+      margin-top: 20px;
+      background: #415a77;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+    li {
+      padding: 5px 0;
+      font-size: 1.1rem;
+    }
+    section {
+      max-width: 720px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #1b263b;
+      border-radius: 10px;
+      text-align: left;
+    }
+    section h2 {
+      color: #f4d35e;
+      margin-top: 0;
+    }
+    section h3 {
+      color: #f4d35e;
+      margin-bottom: 5px;
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5rem; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sleep Schedule Optimizer</h1>
+  <p>Find the best time to sleep and wake up for maximum energy and focus.</p>
+
+  <div class="container">
+    <label for="wakeTime">Enter Wake-Up Time:</label>
+    <input type="time" id="wakeTime">
+    <button onclick="calculateBedTimes()">Calculate Bedtimes</button>
+    <div id="results"></div>
+  </div>
+
+  <!-- Blog Sections -->
+  <section>
+    <h2>Why Sleep Cycles Matter</h2>
+    <p>Most adults need between 7 to 9 hours of sleep per night, but it’s not just about the total hours — it’s about <strong>sleep cycles</strong>. Each cycle lasts about 90 minutes, and waking up in the middle of a cycle can leave you feeling groggy. Our Sleep Schedule Optimizer helps you wake up between cycles, so you start your day feeling refreshed.</p>
+  </section>
+
+  <section>
+    <h2>Tips for Better Sleep</h2>
+    <ul>
+      <li>Go to bed at the same time every night.</li>
+      <li>Avoid caffeine and heavy meals before bedtime.</li>
+      <li>Keep your bedroom cool, dark, and quiet.</li>
+      <li>Limit screen time at least 1 hour before sleep.</li>
+      <li>Consider light stretching or meditation before bed.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>FAQ: Common Sleep Questions</h2>
+    <h3>1. Is 6 hours of sleep enough?</h3>
+    <p>While some people function on 6 hours, most adults need 7–9 hours for optimal health and productivity.</p>
+
+    <h3>2. Can naps replace lost sleep?</h3>
+    <p>Naps can improve alertness, but they don’t fully replace the benefits of a full night’s sleep.</p>
+
+    <h3>3. What’s the best time to wake up?</h3>
+    <p>There’s no universal best time — it depends on your lifestyle and work schedule. Our calculator helps you find your personalized time.</p>
+  </section>
+
+  <script>
+    function calculateBedTimes() {
+      let wakeTime = document.getElementById('wakeTime').value;
+      if (!wakeTime) {
+        alert("Please enter a wake-up time.");
+        return;
+      }
+      let [hour, minute] = wakeTime.split(":").map(Number);
+      let results = [];
+      for (let i = 6; i >= 3; i--) {
+        let totalMinutes = (hour * 60 + minute) - (i * 90 + 14);
+        if (totalMinutes < 0) totalMinutes += 1440;
+        let bedHour = Math.floor(totalMinutes / 60) % 24;
+        let bedMinute = totalMinutes % 60;
+        let period = bedHour >= 12 ? "PM" : "AM";
+        let displayHour = bedHour % 12 || 12;
+        let displayMinute = bedMinute.toString().padStart(2, "0");
+        results.push(`${displayHour}:${displayMinute} ${period}`);
+      }
+      let html = "<div class='result'><h3>Best Times to Sleep:</h3><ul>";
+      results.forEach(time => { html += `<li>${time}</li>`; });
+      html += "</ul><p><strong>Tip:</strong> Aim for 4–6 sleep cycles per night for optimal health.</p></div>";
+      document.getElementById('results').innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
