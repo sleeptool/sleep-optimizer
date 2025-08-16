@@ -1,74 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SleepTool - Better Sleep, Better Life</title>
-  
-  <!-- AdSense Code -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8422851611884090"
-     crossorigin="anonymous"></script>
-
-  <!-- Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Tool</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d1117;
+      color: #e6edf3;
+      line-height: 1.6;
     }
     header {
-      background: #1a2a44;
-      color: #fff;
-      padding: 15px 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: #161b22;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    header img {
-      height: 50px;
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #58a6ff;
+    }
+    nav {
+      margin-top: 0.5rem;
     }
     nav a {
-      color: #fff;
-      text-decoration: none;
       margin: 0 15px;
-      font-weight: bold;
+      text-decoration: none;
+      color: #c9d1d9;
+      font-weight: 500;
     }
     nav a:hover {
-      text-decoration: underline;
+      color: #58a6ff;
     }
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-      background: #e8f0fe;
-    }
-    .hero h1 {
-      font-size: 2.5em;
-      margin-bottom: 15px;
-    }
-    .content {
-      padding: 40px 20px;
+    section {
+      padding: 3rem 1rem;
       max-width: 900px;
       margin: auto;
     }
-    footer {
-      text-align: center;
-      background: #1a2a44;
-      color: white;
-      padding: 20px;
-      margin-top: 40px;
-    }
     h2 {
-      color: #1a2a44;
+      color: #58a6ff;
+      margin-bottom: 1rem;
+    }
+    footer {
+      background: #161b22;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    .tool-container {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    input {
+      width: 200px;
+      background: #0d1117;
+      color: #e6edf3;
+      border: 1px solid #30363d;
+    }
+    button {
+      background: #238636;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #c9d1d9;
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
-    <div class="logo">
-      <img src="SleepTool Logo - Circle Emphasis.png" alt="SleepTool Logo">
-    </div>
+    <h1>Sleep Tool</h1>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
@@ -77,44 +99,69 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <h1>Welcome to SleepTool</h1>
-    <p>Your companion for better sleep, relaxation, and productivity.</p>
+  <section id="home">
+    <h2>Welcome to Sleep Tool</h2>
+    <p>Your personal companion for better rest. Calculate the best time to sleep and wake up, so you always feel refreshed.</p>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="content">
-    <h2>About Us</h2>
+  <section id="about">
+    <h2>About</h2>
     <p>
-      At <strong>SleepTool</strong>, we believe that quality sleep is the foundation of a healthy, happy life. 
-      Our mission is to provide tools, tips, and resources that help you improve your sleep quality, reduce stress, and 
-      wake up refreshed every day. Whether you struggle with insomnia or just want to optimize your bedtime routine, 
-      SleepTool is here to guide you.
+      Sleep Tool is designed to help you improve your sleep cycle by calculating 
+      the most optimal sleep and wake-up times based on the natural 90-minute cycles 
+      of the human body. Whether you are a student, professional, or just want to 
+      wake up without feeling tired — Sleep Tool makes it simple.
+    </p>
+    <p>
+      With an easy-to-use calculator, you can plan your sleep schedule, boost your 
+      productivity, and live a healthier lifestyle.
     </p>
   </section>
 
-  <!-- Tools Section -->
-  <section id="tools" class="content">
-    <h2>Our Tools</h2>
-    <p>Explore free and helpful tools designed to improve your sleep cycle:</p>
-    <ul>
-      <li>🕒 Sleep Cycle Calculator – Find the perfect bedtime to wake up refreshed.</li>
-      <li>🌙 Relaxation Sounds – Listen to calming sounds for better sleep.</li>
-      <li>📅 Bedtime Planner – Organize your night routine for consistency.</li>
-    </ul>
+  <section id="tools">
+    <h2>Sleep Time Calculator</h2>
+    <div class="tool-container">
+      <p>Enter the time you want to wake up:</p>
+      <input type="time" id="wakeTime">
+      <button onclick="calculateSleep()">Calculate</button>
+      <div id="result"></div>
+    </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="content">
-    <h2>Contact Us</h2>
-    <p>We’d love to hear from you! Reach out anytime at:</p>
-    <p><strong>Email:</strong> <a href="mailto:ailaraza548@gmail.com">ailaraza548@gmail.com</a></p>
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Have questions or feedback? Reach out to us at:</p>
+    <p><strong>Email:</strong> ailaraza548@gmail.com</p>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>© 2025 SleepTool. All rights reserved.</p>
+    <p>© 2025 Sleep Tool. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    function calculateSleep() {
+      const wakeInput = document.getElementById("wakeTime").value;
+      if (!wakeInput) {
+        document.getElementById("result").innerHTML = "Please select a wake-up time.";
+        return;
+      }
+      const wakeTime = new Date();
+      const [hours, minutes] = wakeInput.split(":");
+      wakeTime.setHours(hours);
+      wakeTime.setMinutes(minutes);
+
+      const cycles = [6, 7.5, 9]; 
+      let resultHTML = "<h3>Recommended Sleep Times:</h3><ul>";
+      cycles.forEach(cycle => {
+        const sleepTime = new Date(wakeTime.getTime() - cycle * 60 * 60 * 1000);
+        let hrs = sleepTime.getHours().toString().padStart(2, "0");
+        let mins = sleepTime.getMinutes().toString().padStart(2, "0");
+        resultHTML += `<li>${hrs}:${mins}</li>`;
+      });
+      resultHTML += "</ul>";
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
 </body>
 </html>
+
