@@ -1,177 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sleep Tool</title> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sleep Tool — Smart Sleep Calculator & Nap Planner</title>
+  <meta name="description" content="Sleep Tool helps you plan perfect bedtimes, wake-up times, power naps, and sleep windows using 90-minute cycles. Free, fast, and mobile-friendly." />
+  <link rel="canonical" href="https://sleeptool.site/" />
 
+  <!-- AdSense (leave as-is) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8422851611884090" crossorigin="anonymous"></script>
 
-  
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8422851611884090"
-     crossorigin="anonymous"></script> 
-
-
-  
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0d1117;
-      color: #e6edf3;
-      line-height: 1.6;
+    /* ===== Base / Theme ===== */
+    :root{
+      --bg:#0d1117;          --bg2:#161b22;        --text:#e6edf3;
+      --muted:#9da7b1;       --line:#30363d;       --brand:#58a6ff;
+      --accent:#1f6feb;      --ok:#2ea043;         --warn:#f2cc60;
+      --danger:#ff7b72;      --shadow:0 0 18px rgba(88,166,255,.18);
+      --radius:12px;
     }
-    header {
-      background: #161b22;
-      padding: 1rem;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1080px;margin:0 auto;padding:0 18px}
+
+    /* ===== Header / Nav ===== */
+    header{
+      position:sticky;top:0;z-index:999;background:rgba(13,17,23,.9);
+      backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      color: #58a6ff;
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{font-weight:800;letter-spacing:.5px;color:var(--brand)}
+    .menu{display:flex;gap:18px;flex-wrap:wrap}
+    .menu a{color:#c9d1d9;font-weight:600}
+    .menu a:hover{color:var(--brand)}
+    .cta{background:var(--brand);color:#071018;padding:8px 14px;border-radius:8px;font-weight:700}
+    .cta:hover{background:var(--accent);color:#fff}
+
+    /* ===== Hero ===== */
+    .hero{
+      background:linear-gradient(180deg,#0d1117 0%,#0d1117 55%,#0e1320 100%);
+      padding:72px 0 36px;border-bottom:1px solid var(--line)
     }
-    nav {
-      margin-top: 0.5rem;
+    .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px;color:var(--brand)}
+    .hero p{color:var(--muted);max-width:720px}
+    .hero-actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+
+    /* ===== Sections ===== */
+    section{padding:64px 0;border-bottom:1px solid var(--line)}
+    h2{font-size:clamp(22px,3.5vw,30px);margin:0 0 18px;color:var(--brand)}
+    .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .grid{display:grid;gap:18px}
+    @media(min-width:800px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+
+    /* ===== Inputs / Buttons ===== */
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input,select,button,textarea{
+      background:#0b0f14;border:1px solid var(--line);color:var(--text);
+      border-radius:10px;padding:10px 12px;font-size:15px
     }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #c9d1d9;
-      font-weight: 500;
-    }
-    nav a:hover {
-      color: #58a6ff;
-    }
-    section {
-      padding: 3rem 1rem;
-      max-width: 900px;
-      margin: auto;
-    }
-    h2 {
-      color: #58a6ff;
-      margin-bottom: 1rem;
-    }
-    footer {
-      background: #161b22;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-    }
-    .tool-container {
-      background: #161b22;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-    input {
-      width: 200px;
-      background: #0d1117;
-      color: #e6edf3;
-      border: 1px solid #30363d;
-    }
-    button {
-      background: #238636;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #2ea043;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #c9d1d9;
-    }
+    input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);border-color:transparent}
+    button{cursor:pointer;background:var(--brand);color:#081019;font-weight:700}
+    button:hover{background:var(--accent);color:#fff}
+
+    /* ===== Results ===== */
+    .result{margin-top:12px;padding:12px;border:1px dashed var(--line);border-radius:10px;background:#0b0f14}
+    .badge{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+    /* ===== FAQ (accordion) ===== */
+    .faq details{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px}
+    .faq details+details{margin-top:10px}
+    .faq summary{cursor:pointer;font-weight:700}
+    .faq p{margin:8px 0 0;color:#cfd6de}
+
+    /* ===== Footer ===== */
+    footer{background:var(--bg2);border-top:1px solid var(--line);padding:28px 0;font-size:14px;color:#b5bec8}
+    .footlinks{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
   </style>
 </head>
 <body>
+
+  <!-- ===== Header ===== -->
   <header>
-    <h1>Sleep Tool</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#tools">Tools</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="container nav">
+      <div class="logo">Sleep Tool</div>
+      <nav class="menu">
+        <a href="#about">About</a>
+        <a href="#tools">Tools</a>
+        <a href="#faq">FAQ</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <section id="home">
-    <h2>Welcome to Sleep Tool</h2>
-    <p>Your personal companion for better rest. Calculate the best time to sleep and wake up, so you always feel refreshed.</p>
-  </section>
+  <!-- ===== Hero ===== -->
+  <div class="hero">
+    <div class="container">
+      <h1>Plan the Perfect Sleep — Every Night</h1>
+      <p>
+        Use free tools to calculate optimal bedtimes, wake-up times, power naps, and sleep windows using 90-minute cycles.
+        Wake up refreshed, boost focus, and improve your daily energy.
+      </p>
+      <div class="hero-actions">
+        <a class="cta" href="#tools">Try the Sleep Calculator</a>
+        <a href="#faq" class="badge">Learn how it works</a>
+      </div>
+    </div>
+  </div>
 
+  <!-- ===== About ===== -->
   <section id="about">
-    <h2>About</h2>
-    <p>
-      Sleep Tool is designed to help you improve your sleep cycle by calculating 
-      the most optimal sleep and wake-up times based on the natural 90-minute cycles 
-      of the human body. Whether you are a student, professional, or just want to 
-      wake up without feeling tired — Sleep Tool makes it simple.
-    </p>
-    <p>
-      With an easy-to-use calculator, you can plan your sleep schedule, boost your 
-      productivity, and live a healthier lifestyle.
-    </p>
-  </section>
-
-  <section id="tools">
-    <h2>Sleep Time Calculator</h2>
-    <div class="tool-container">
-      <p>Enter the time you want to wake up:</p>
-      <input type="time" id="wakeTime">
-      <button onclick="calculateSleep()">Calculate</button>
-      <div id="result"></div>
+    <div class="container grid cols-2">
+      <div class="card">
+        <h2>About Sleep Tool</h2>
+        <p>
+          Sleep Tool helps you align your rest with natural 90-minute sleep cycles. Instead of guessing a bedtime,
+          choose when you want to wake up (or when you can sleep), and we calculate the most refreshing options.
+        </p>
+        <p>
+          Whether you’re a student juggling classes, a professional with early meetings, or a parent on duty,
+          our tools are fast, free, and work entirely in your browser — no sign-up required.
+        </p>
+        <ul>
+          <li>Cycle-based planning for <strong>better mornings</strong></li>
+          <li>Free tools that run <strong>locally</strong> in your browser</li>
+          <li>Designed for <strong>mobile and desktop</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Quick Tips for Better Sleep</h2>
+        <ul>
+          <li>Keep a consistent sleep and wake schedule (even weekends).</li>
+          <li>Aim for 4–6 full cycles (6–9 hours) when possible.</li>
+          <li>Limit caffeine after mid-afternoon and keep your room cool, dark, and quiet.</li>
+          <li>Use a short <em>power nap</em> (10–25 min) when you’re dragging — avoid long evening naps.</li>
+        </ul>
+        <p class="badge">These tips are general info, not medical advice.</p>
+      </div>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Have questions or feedback? Reach out to us at:</p>
-    <p><strong>Email:</strong> ailaraza548@gmail.com</p>
+  <!-- ===== Tools ===== -->
+  <section id="tools">
+    <div class="container">
+      <h2>Tools</h2>
+      <div class="grid cols-2">
+        <!-- Tool 1: Bedtime from Wake -->
+        <div class="card">
+          <h3>Sleep Cycle Calculator (Bedtime from Wake-up)</h3>
+          <p>Pick when you want to wake up. We’ll suggest bedtimes that land on full 90-minute cycles.</p>
+          <div class="row">
+            <label for="wakeTime">Wake-up time:</label>
+            <input type="time" id="wakeTime">
+            <button onclick="calcBedtime()">Calculate</button>
+          </div>
+          <div id="resBedtime" class="result"></div>
+        </div>
+
+        <!-- Tool 2: Wake from Bedtime -->
+        <div class="card">
+          <h3>Wake-up Planner (Wake from Bedtime)</h3>
+          <p>Going to bed at a specific time? Get ideal wake-up times that match full cycles.</p>
+          <div class="row">
+            <label for="sleepTime">Bedtime:</label>
+            <input type="time" id="sleepTime">
+            <button onclick="calcWake()">Calculate</button>
+          </div>
+          <div id="resWake" class="result"></div>
+        </div>
+
+        <!-- Tool 3: Power Nap Planner -->
+        <div class="card">
+          <h3>Power Nap Planner</h3>
+          <p>Set a start time and get a smart nap end time (10–25 mins for alertness, or 90 mins for a full cycle).</p>
+          <div class="row">
+            <label for="napStart">Nap start:</label>
+            <input type="time" id="napStart">
+            <select id="napType">
+              <option value="short">Short (10–25 min)</option>
+              <option value="cycle">Full cycle (90 min)</option>
+            </select>
+            <button onclick="planNap()">Plan Nap</button>
+          </div>
+          <div id="resNap" class="result"></div>
+        </div>
+
+        <!-- Tool 4: Sleep Window Helper -->
+        <div class="card">
+          <h3>Sleep Window Helper</h3>
+          <p>Choose a time range you can sleep, and we’ll find the best windows that fit full cycles.</p>
+          <div class="row">
+            <label for="winStart">Window start:</label>
+            <input type="time" id="winStart">
+            <label for="winEnd">Window end:</label>
+            <input type="time" id="winEnd">
+            <button onclick="sleepWindow()">Find Windows</button>
+          </div>
+          <div id="resWindow" class="result"></div>
+        </div>
+      </div>
+      <p style="margin-top:10px" class="badge">All tools run locally in your browser — no data is sent to our servers.</p>
+    </div>
   </section>
 
+  <!-- ===== FAQ ===== -->
+  <section id="faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details class="card">
+          <summary>What is a sleep cycle and why 90 minutes?</summary>
+          <p>Sleep cycles average ~90 minutes across light, deep, and REM stages. Waking at the end of a cycle tends to feel easier.</p>
+        </details>
+        <details class="card">
+          <summary>How many cycles should I aim for?</summary>
+          <p>Common targets are 4–6 cycles (≈6–9 hours). Life happens — use the planner to get the best you can.</p>
+        </details>
+        <details class="card">
+          <summary>Are these tools medical advice?</summary>
+          <p>No — they’re general educational tools. If you have ongoing sleep issues, consult a medical professional.</p>
+        </details>
+        <details class="card">
+          <summary>Do you store my times or personal data?</summary>
+          <p>No. The tools calculate entirely in your browser. See Privacy for details on ads/analytics cookies.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Privacy (AdSense-ready) ===== -->
+  <section id="privacy">
+    <div class="container">
+      <h2>Privacy Policy</h2>
+      <div class="card">
+        <p><strong>Last updated:</strong> August 20, 2025</p>
+        <p>
+          Sleep Tool (“we”, “our”, “us”) respects your privacy. The calculator tools run locally in your browser —
+          we do not collect or store the times you enter.
+        </p>
+
+        <h3>Information We Process</h3>
+        <ul>
+          <li><strong>Tool inputs:</strong> Bedtime/wake times you enter are processed in your browser only.</li>
+          <li><strong>Analytics & ads (third-party):</strong> If enabled, services like Google AdSense/Analytics may use cookies or similar technologies to deliver and measure ads, combat fraud, and improve services.</li>
+        </ul>
+
+        <h3>Advertising (Google AdSense)</h3>
+        <p>
+          Third-party vendors, including Google, may use cookies to serve ads based on your prior visits to this or other websites.
+          Google’s use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the Internet.
+        </p>
+        <ul>
+          <li>You can opt out of personalized advertising by visiting <em>Ads Settings</em> in your Google account.</li>
+          <li>Alternatively, opt out of some third-party vendors’ uses of cookies for personalized advertising at industry opt-out pages (where available in your region).</li>
+        </ul>
+
+        <h3>Cookies</h3>
+        <p>
+          We do not set our own cookies for the calculator. Third-party services (e.g., AdSense/Analytics) may set cookies.
+          Your browser allows you to block or clear cookies at any time.
+        </p>
+
+        <h3>Data Sharing</h3>
+        <p>We do not sell personal information. Third-party vendors may process data under their own policies and lawful bases.</p>
+
+        <h3>Your Choices</h3>
+        <ul>
+          <li>Adjust ad personalization in your Google account’s Ads Settings.</li>
+          <li>Use your browser’s controls to block/clear cookies.</li>
+          <li>Contact us for any privacy questions: <a href="mailto:ailaraza548@gmail.com">ailaraza548@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <div class="container grid cols-2">
+      <div class="card">
+        <h2>Contact</h2>
+        <p>Questions, suggestions, or collaboration ideas? We’d love to hear from you.</p>
+        <p><strong>Email:</strong> <a href="mailto:ailaraza548@gmail.com">ailaraza548@gmail.com</a></p>
+        <p class="badge">Response time: 24–48 hours (usually sooner).</p>
+      </div>
+      <div class="card">
+        <h2>Quick Links</h2>
+        <ul>
+          <li><a href="#tools">Use the Sleep Calculator</a></li>
+          <li><a href="#faq">Read the FAQ</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
   <footer>
-    <p>© 2025 Sleep Tool. All Rights Reserved.</p>
+    <div class="container">
+      <div>© 2025 Sleep Tool — All rights reserved.</div>
+      <div class="footlinks">
+        <a href="#about">About</a> ·
+        <a href="#tools">Tools</a> ·
+        <a href="#faq">FAQ</a> ·
+        <a href="#privacy">Privacy</a> ·
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
   </footer>
 
+  <!-- ===== JS: Calculator Logic ===== -->
   <script>
-    function calculateSleep() {
-      const wakeInput = document.getElementById("wakeTime").value;
-      if (!wakeInput) {
-        document.getElementById("result").innerHTML = "Please select a wake-up time.";
-        return;
-      }
-      const wakeTime = new Date();
-      const [hours, minutes] = wakeInput.split(":");
-      wakeTime.setHours(hours);
-      wakeTime.setMinutes(minutes);
+    // Helpers
+    function parseTimeToDate(value){
+      // value 'HH:MM' -> Date today with set hours/minutes
+      const now = new Date();
+      const [h,m] = value.split(':').map(Number);
+      now.setHours(h, m, 0, 0);
+      return now;
+    }
+    function fmt(d){
+      return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    }
 
-      const cycles = [6, 7.5, 9]; 
-      let resultHTML = "<h3>Recommended Sleep Times:</h3><ul>";
-      cycles.forEach(cycle => {
-        const sleepTime = new Date(wakeTime.getTime() - cycle * 60 * 60 * 1000);
-        let hrs = sleepTime.getHours().toString().padStart(2, "0");
-        let mins = sleepTime.getMinutes().toString().padStart(2, "0");
-        resultHTML += `<li>${hrs}:${mins}</li>`;
+    // 1) Bedtime from Wake-up
+    function calcBedtime(){
+      const v = document.getElementById('wakeTime').value;
+      const out = document.getElementById('resBedtime');
+      if(!v){ out.textContent = 'Please select a wake-up time.'; return; }
+      const wake = parseTimeToDate(v);
+      const cycles = [6, 7.5, 9]; // hours (4–6 cycles)
+      const list = cycles.map(h => {
+        const t = new Date(wake.getTime() - h*60*60*1000);
+        return `<li><strong>${fmt(t)}</strong> (${h} hrs)</li>`;
+      }).reverse(); // earliest first
+      out.innerHTML = `<div><strong>Recommended bedtimes:</strong><ul>${list.join('')}</ul><div class="badge">Tip: try to fall asleep within ~15 min of these times.</div></div>`;
+    }
+
+    // 2) Wake from Bedtime
+    function calcWake(){
+      const v = document.getElementById('sleepTime').value;
+      const out = document.getElementById('resWake');
+      if(!v){ out.textContent = 'Please enter your bedtime.'; return; }
+      const bed = parseTimeToDate(v);
+      const cycles = [6, 7.5, 9]; // hours forward
+      const list = cycles.map(h => {
+        const t = new Date(bed.getTime() + h*60*60*1000);
+        return `<li><strong>${fmt(t)}</strong> (${h} hrs)</li>`;
       });
-      resultHTML += "</ul>";
-      document.getElementById("result").innerHTML = resultHTML;
+      out.innerHTML = `<div><strong>Ideal wake-up options:</strong><ul>${list.join('')}</ul></div>`;
+    }
+
+    // 3) Power Nap Planner
+    function planNap(){
+      const startVal = document.getElementById('napStart').value;
+      const type = document.getElementById('napType').value;
+      const out = document.getElementById('resNap');
+      if(!startVal){ out.textContent = 'Please select a nap start time.'; return; }
+      const start = parseTimeToDate(startVal);
+      const mins = type === 'cycle' ? 90 : 20; // default short 20
+      const end = new Date(start.getTime() + mins*60*1000);
+      out.innerHTML = `<div><strong>Suggested wake time:</strong> ${fmt(end)} <br><span class="badge">${type==='cycle'?'Full cycle (~90 min)':'Short alertness nap (10–25 min)'}</span></div>`;
+    }
+
+    // 4) Sleep Window Helper
+    function sleepWindow(){
+      const s = document.getElementById('winStart').value;
+      const e = document.getElementById('winEnd').value;
+      const out = document.getElementById('resWindow');
+      if(!s || !e){ out.textContent = 'Please enter both start and end times.'; return; }
+      const start = parseTimeToDate(s);
+      let end = parseTimeToDate(e);
+      // if end earlier than start, assume window crosses midnight
+      if(end <= start) end = new Date(end.getTime() + 24*60*60*1000);
+
+      const options = [];
+      const cycle = 90*60*1000; // 90 min
+      // Try bedtimes every 15 minutes inside the window, compute 4-6 cycles fits
+      for(let t = new Date(start); t <= end; t = new Date(t.getTime() + 15*60*1000)){
+        [4,5,6].forEach(c => {
+          const wake = new Date(t.getTime() + c*cycle);
+          if(wake <= end){
+            options.push({bed:new Date(t), wake, cycles:c});
+          }
+        });
+      }
+      if(options.length===0){ out.textContent='No full-cycle windows found in this range.'; return; }
+      // Keep up to 6 concise options
+      const show = options.slice(0,6).map(o=>`<li><strong>${fmt(o.bed)}</strong> → ${fmt(o.wake)} (${o.cycles} cycles)</li>`);
+      out.innerHTML = `<div><strong>Best windows inside your range:</strong><ul>${show.join('')}</ul></div>`;
     }
   </script>
 </body>
 </html>
+
 
 
 
